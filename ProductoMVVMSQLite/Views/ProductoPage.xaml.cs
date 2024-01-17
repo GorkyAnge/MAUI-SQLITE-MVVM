@@ -9,4 +9,6 @@ public partial class ProductoPage : ContentPage
 		InitializeComponent();
 		BindingContext = new ProductoViewModel();
 	}
+
+
 }

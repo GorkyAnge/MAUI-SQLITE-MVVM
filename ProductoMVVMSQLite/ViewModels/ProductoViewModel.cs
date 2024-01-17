@@ -26,24 +26,28 @@ namespace ProductoMVVMSQLite.ViewModels
         
         }
 
+        public ICommand LoadProductos =>
+           new Command(async () =>
+           {
+               Util.ListaProductos = new ObservableCollection<Producto>(App.productoRepository.GetAll());
+               ListaProductos = Util.ListaProductos;
+           });
+
         public ICommand CrearProducto =>
             new Command(async () =>
             {
                await App.Current.MainPage.Navigation.PushAsync(new NuevoProductoPage());
             });
 
-        public ICommand EditarProducto =>
+        public ICommand DetallesProducto =>
             new Command(async () =>
             {
                 if (ProductoSeleccionado != null)
                 {
                     int IdProducto = ProductoSeleccionado.IdProducto;
-                    //ProductoSeleccionado = null;
-                    await App.Current.MainPage.Navigation.PushAsync(new NuevoProductoPage(IdProducto));
+                    await App.Current.MainPage.Navigation.PushAsync(new DetalleProductoPage(IdProducto));
                     ProductoSeleccionado = null;
                 }
-              
-
             });
 
     }

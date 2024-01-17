@@ -20,16 +20,5 @@ namespace ProductoMVVMSQLite.Models
         public string Descripcion { get; set; }
         [Column("cantidad")]
         public int Cantidad { get; set;}
-        [Column("imagen")]
-        public string Imagen { get; set; }
-
-        [Ignore]
-        public ImageSource ImagenProducto
-        {
-            get
-            {
-                return ImageSource.FromFile(Imagen);
-            }
-        }
     }
 }

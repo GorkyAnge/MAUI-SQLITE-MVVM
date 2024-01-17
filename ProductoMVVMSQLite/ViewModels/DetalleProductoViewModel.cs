@@ -12,21 +12,21 @@ using System.Windows.Input;
 namespace ProductoMVVMSQLite.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
-    public class NuevoProductoViewModel
+    public class DetalleProductoViewModel
     {
+
         public string Nombre { get; set; }
         public string Cantidad { get; set; }
         public string Descripcion { get; set; }
-
-
         private Producto _producto { get; set; }
 
-        public NuevoProductoViewModel()
+
+        public DetalleProductoViewModel()
         {
 
         }
 
-        public NuevoProductoViewModel(int IdProducto)
+        public DetalleProductoViewModel(int IdProducto)
         {
             _producto = App.productoRepository.Get(IdProducto);
             Nombre = _producto.Nombre;
@@ -34,18 +34,30 @@ namespace ProductoMVVMSQLite.ViewModels
             Cantidad = _producto.Cantidad.ToString();
 
         }
-        public ICommand CrearProducto =>
+        public ICommand EditarProducto =>
             new Command(async () =>
             {
-                Producto producto = new Producto
+                if (_producto != null)
                 {
-                    Nombre = Nombre,
-                    Descripcion = Descripcion,
-                    Cantidad = Int32.Parse(Cantidad),
-                };
-                App.productoRepository.Add(producto);
-                ActualizarLista();
-                await App.Current.MainPage.Navigation.PopAsync();
+                    int IdProducto = _producto.IdProducto;
+                    await App.Current.MainPage.Navigation.PopAsync();
+                    await App.Current.MainPage.Navigation.PushAsync(new EditarProductoPage(IdProducto));
+                    _producto = null;
+                }              
+
+            });
+
+        public ICommand BorrarProducto =>
+            new Command(async () =>
+            {
+                if (_producto != null)
+                {
+                    int IdProducto = _producto.IdProducto;
+                    App.productoRepository.Delete(_producto);
+                    await App.Current.MainPage.Navigation.PopAsync();
+
+                }
+
             });
 
         private void ActualizarLista()

@@ -4,7 +4,12 @@
              x:Class="ProductoMVVMSQLite.Views.ProductoPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="ProductoPage">
- 
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Recargar Productos" Command="{Binding LoadProductos}" />
+    </ContentPage.ToolbarItems>
+
     <VerticalStackLayout>
 
         <HorizontalStackLayout
@@ -16,59 +21,44 @@
                 />
             <Label 
                 x:Name="Username"
-                Text="Productos"
+                Text="ListaProductos"
                 FontSize="30"
                 TextColor="White"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
         </HorizontalStackLayout>
-        <Button
-            Text="Nuevo Producto"
+        <Button Text="Añadir Producto"
+            BackgroundColor="#3498db"  
+            TextColor="White"
             FontSize="20"
-            HorizontalOptions="Fill"
-            Command="{Binding CrearProducto}"/>
-
+            WidthRequest="200" 
+            Command="{Binding CrearProducto}"
+            Margin="0,10,0,10" />
+        
         <CollectionView x:Name="listaProductos"
                   SelectedItem="{Binding ProductoSeleccionado}"
                   ItemsSource="{Binding ListaProductos}"
                   SelectionMode="Single"
-                  SelectionChangedCommand="{Binding EditarProducto}"
-                  >
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout
-                    ItemSpacing="10"
-                    Orientation="Vertical"
-                    SnapPointsAlignment="Start"
-                    SnapPointsType="MandatorySingle" />
-                </CollectionView.ItemsLayout>
+                  SelectionChangedCommand="{Binding DetallesProducto}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-               
-                        <StackLayout Orientation="Horizontal">
-                            <Image Source="{Binding ImagenProducto}"
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="https://s2.coinmarketcap.com/static/img/coins/64x64/10269.png"
                                    HeightRequest="50"
                                    WidthRequest="100"/>
-                            <StackLayout Orientation="Vertical">
-                                <Label
+                        <StackLayout Orientation="Vertical">
+                            <Label
                                     Text="{Binding Nombre}"
                                     VerticalOptions="Start"
                                     FontSize="20"/>
-                                <Label
+                            <Label
                                     Text="{Binding Cantidad}"
                                     VerticalOptions="End"
                                     FontSize="20"/>
-                            </StackLayout>
                         </StackLayout>
-
-               
-
+                    </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
-
         </CollectionView>
-
-
-
     </VerticalStackLayout>
 </ContentPage>
