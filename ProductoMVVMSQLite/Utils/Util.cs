@@ -12,7 +12,7 @@ namespace ProductoMVVMSQLite.Utils
     public static class Util
     {
 
-        public static ObservableCollection<Producto> ListaProductos  {get; set;}
+        public static ObservableCollection<Producto> ListaProductos { get; set; }
 
         private const string DBFileName = "productos4.db3";
         public const SQLiteOpenFlags Flags =

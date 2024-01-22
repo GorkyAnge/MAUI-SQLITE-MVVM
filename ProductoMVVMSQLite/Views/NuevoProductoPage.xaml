@@ -21,7 +21,12 @@
                 </TableSection>
             </TableRoot>
         </TableView>
-        <Button Text="Guardad Producto"
-                Command="{Binding CrearProducto}"/>
+        <Button Text="Agregar Producto"
+                 BackgroundColor="#3498db"  
+                 TextColor="White"
+                 FontSize="20"
+                 WidthRequest="200" 
+                 Command="{Binding CrearProducto}"
+                 Margin="0,10,0,10" />
     </VerticalStackLayout>
 </ContentPage>

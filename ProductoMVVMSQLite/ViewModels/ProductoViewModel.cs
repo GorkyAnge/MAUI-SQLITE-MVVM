@@ -2,12 +2,7 @@
 using ProductoMVVMSQLite.Utils;
 using ProductoMVVMSQLite.Views;
 using PropertyChanged;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ProductoMVVMSQLite.ViewModels
@@ -17,11 +12,10 @@ namespace ProductoMVVMSQLite.ViewModels
     {
         public ObservableCollection<Producto> ListaProductos { get; set; }
 
-        public Producto ProductoSeleccionado {get;set;}
+        public Producto producto {get;set;}
 
         public ProductoViewModel() {
             Util.ListaProductos = new ObservableCollection<Producto>(App.productoRepository.GetAll());
-
             ListaProductos = Util.ListaProductos;
         
         }
@@ -42,11 +36,11 @@ namespace ProductoMVVMSQLite.ViewModels
         public ICommand DetallesProducto =>
             new Command(async () =>
             {
-                if (ProductoSeleccionado != null)
+                if (producto != null)
                 {
-                    int IdProducto = ProductoSeleccionado.IdProducto;
+                    int IdProducto = producto.IdProducto;
                     await App.Current.MainPage.Navigation.PushAsync(new DetalleProductoPage(IdProducto));
-                    ProductoSeleccionado = null;
+                    producto = null;
                 }
             });
 

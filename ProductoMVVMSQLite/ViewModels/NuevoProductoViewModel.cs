@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ProductoMVVMSQLite.Models;
 using ProductoMVVMSQLite.Utils;
-using ProductoMVVMSQLite.Views;
 using PropertyChanged;
 using System.Windows.Input;
 
@@ -19,7 +18,7 @@ namespace ProductoMVVMSQLite.ViewModels
         public string Descripcion { get; set; }
 
 
-        private Producto _producto { get; set; }
+        private Producto producto { get; set; }
 
         public NuevoProductoViewModel()
         {
@@ -28,10 +27,10 @@ namespace ProductoMVVMSQLite.ViewModels
 
         public NuevoProductoViewModel(int IdProducto)
         {
-            _producto = App.productoRepository.Get(IdProducto);
-            Nombre = _producto.Nombre;
-            Descripcion = _producto.Descripcion;
-            Cantidad = _producto.Cantidad.ToString();
+            producto = App.productoRepository.Get(IdProducto);
+            Nombre = producto.Nombre;
+            Descripcion = producto.Descripcion;
+            Cantidad = producto.Cantidad.ToString();
 
         }
         public ICommand CrearProducto =>

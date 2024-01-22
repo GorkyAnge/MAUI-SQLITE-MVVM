@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProductoMVVMSQLite.Models;
+﻿using ProductoMVVMSQLite.Models;
 using ProductoMVVMSQLite.Utils;
 using ProductoMVVMSQLite.Views;
 using PropertyChanged;
@@ -18,7 +13,7 @@ namespace ProductoMVVMSQLite.ViewModels
         public string Nombre { get; set; }
         public string Cantidad { get; set; }
         public string Descripcion { get; set; }
-        private Producto _producto { get; set; }
+        private Producto producto { get; set; }
 
 
         public DetalleProductoViewModel()
@@ -28,21 +23,21 @@ namespace ProductoMVVMSQLite.ViewModels
 
         public DetalleProductoViewModel(int IdProducto)
         {
-            _producto = App.productoRepository.Get(IdProducto);
-            Nombre = _producto.Nombre;
-            Descripcion = _producto.Descripcion;
-            Cantidad = _producto.Cantidad.ToString();
+            producto = App.productoRepository.Get(IdProducto);
+            Nombre = producto.Nombre;
+            Descripcion = producto.Descripcion;
+            Cantidad = producto.Cantidad.ToString();
 
         }
         public ICommand EditarProducto =>
             new Command(async () =>
             {
-                if (_producto != null)
+                if (producto != null)
                 {
-                    int IdProducto = _producto.IdProducto;
+                    int IdProducto = producto.IdProducto;
                     await App.Current.MainPage.Navigation.PopAsync();
                     await App.Current.MainPage.Navigation.PushAsync(new EditarProductoPage(IdProducto));
-                    _producto = null;
+                    producto = null;
                 }              
 
             });
@@ -50,10 +45,11 @@ namespace ProductoMVVMSQLite.ViewModels
         public ICommand BorrarProducto =>
             new Command(async () =>
             {
-                if (_producto != null)
+                if (producto != null)
                 {
-                    int IdProducto = _producto.IdProducto;
-                    App.productoRepository.Delete(_producto);
+                    int IdProducto = producto.IdProducto;
+                    App.productoRepository.Delete(producto);
+                    ActualizarLista();
                     await App.Current.MainPage.Navigation.PopAsync();
 
                 }

@@ -9,6 +9,9 @@ public partial class ProductoPage : ContentPage
 		InitializeComponent();
 		BindingContext = new ProductoViewModel();
 	}
-
+    private void OnClickShowDetails(object sender, SelectedItemChangedEventArgs e)
+    {
+        ((ProductoViewModel)BindingContext).DetallesProducto.Execute(null);
+    }
 
 }

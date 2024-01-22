@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProductoMVVMSQLite.Models;
+﻿using ProductoMVVMSQLite.Models;
 using ProductoMVVMSQLite.Utils;
-using ProductoMVVMSQLite.Views;
 using PropertyChanged;
 using System.Windows.Input;
 
@@ -19,7 +13,7 @@ namespace ProductoMVVMSQLite.ViewModels
         public string Cantidad { get; set; }
         public string Descripcion { get; set; }
 
-        private Producto ProductoEncontrado { get; set; }
+        private Producto producto { get; set; }
 
 
         public EditarProductoViewModel()
@@ -29,20 +23,20 @@ namespace ProductoMVVMSQLite.ViewModels
 
         public EditarProductoViewModel(int IdProducto)
         {
-            ProductoEncontrado = App.productoRepository.Get(IdProducto);
-            Nombre = ProductoEncontrado.Nombre;
-            Descripcion = ProductoEncontrado.Descripcion;
-            Cantidad = ProductoEncontrado.Cantidad.ToString();
+            producto = App.productoRepository.Get(IdProducto);
+            Nombre = producto.Nombre;
+            Descripcion = producto.Descripcion;
+            Cantidad = producto.Cantidad.ToString();
 
         }
 
         public ICommand ActualizarProducto =>
             new Command(async () =>
             {
-                ProductoEncontrado.Nombre = Nombre;
-                ProductoEncontrado.Cantidad = Int32.Parse(Cantidad);
-                ProductoEncontrado.Descripcion = Descripcion;
-                App.productoRepository.Update(ProductoEncontrado);
+                producto.Nombre = Nombre;
+                producto.Cantidad = Int32.Parse(Cantidad);
+                producto.Descripcion = Descripcion;
+                App.productoRepository.Update(producto);
                 ActualizarLista();
                 await App.Current.MainPage.Navigation.PopAsync();
                 
@@ -50,6 +44,7 @@ namespace ProductoMVVMSQLite.ViewModels
 
         private void ActualizarLista()
         {
+            Util.ListaProductos.Clear();
             App.productoRepository.GetAll().ForEach(Util.ListaProductos.Add);
         }
 
